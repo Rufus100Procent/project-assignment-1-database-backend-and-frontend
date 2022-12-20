@@ -1,0 +1,22 @@
+services:
+  frontend:
+    build: ./frontend/
+    ports:
+      - "3010:3010"
+    volumes:
+      - ./frontend/:/project-root
+    restart: unless-stopped
+    command: "npm run serve"
+  database:
+    image: postgres
+    environment:
+      POSTGRES_DB: saltmerch
+      POSTGRES_USER: jensenyh
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/saltmerch-db
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./database/data:/data/saltmerch-db
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
