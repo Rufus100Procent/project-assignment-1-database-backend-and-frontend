@@ -1,10 +1,11 @@
 services:
   frontend:
-    build: ./frontend/
+    build: frontend/.
     ports:
       - "3010:3010"
     volumes:
       - ./frontend/:/project-root
+      - /project-root/node_modules
     restart: unless-stopped
     command: "npm run serve"
   database:
