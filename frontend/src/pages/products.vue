@@ -38,7 +38,7 @@
       <div class="col-4">
         <img
           v-if="product.previewImage"
-          :src="require(`@/assets/${product.previewImage}`)"
+          :src="tryToRequireAsset(product.previewImage)"
           class="selected-product-img"
         >
       </div>
@@ -146,6 +146,8 @@
 // import client, { getCart, setCart, resetCart, setProductStock } from '@/services/api-client'
 import client, { setCart } from '@/services/api-client'
 import ProductSelectables from '@/components/ProductSelectables.vue'
+import { tryToRequireAsset } from '@/utilities.js'
+
 export default {
   name: 'App',
   components: {
@@ -179,11 +181,7 @@ export default {
       try {
         return require(`@/assets/${this.currentImages[this.imgIndex]}`)
       } catch (e) {
-        try {
-          return require(`@/assets/${this.product.previewImage}`)
-        } catch (e) {
-          return require('@/assets/images/logo.png')
-        }
+        return tryToRequireAsset(this.product.previewImage)
       }
     },
     currentSize () {
@@ -224,6 +222,7 @@ export default {
         this.product.colorVariants[this.colorIndex].sizes[this.sizeIndex].stock--
       else alert('Error adding item to cart')
     },
+    tryToRequireAsset,
   }
 }
 </script>

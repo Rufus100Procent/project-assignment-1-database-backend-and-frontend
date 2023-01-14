@@ -26,7 +26,7 @@
               <input type="text" v-model="title" />
             </div>
           </div>
-          <div class="row d-flex align-items-center">
+          <div class="row d-flex align-items-center pb-2">
             <div class="col-4">
               <label>Description: </label>
             </div>
@@ -34,6 +34,15 @@
               <input type="text" v-model="description" />
             </div>
           </div>
+          <div class="row d-flex align-items-center">
+            <div class="col-4">
+              <label>Preview image: </label>
+            </div>
+            <div class="col-8">
+              <input type="text" v-model="previewImage" />
+            </div>
+          </div>
+
 
           <div class="container-fluid mt-3 p-2 border">
             <div class="row mb-3 d-flex align-items-center" v-for="colorVariant, i in colorVariants" :key="i">
@@ -136,6 +145,7 @@ export default {
       category: "",
       title: "",
       description: "",
+      previewImage: "",
       colorVariants: [ { images: [""], sizes: [ {} ] } ]
     }
   },
@@ -143,7 +153,7 @@ export default {
     createProduct() {
       console.log("colorVariants=", this.colorVariants);
       // this.$emit('formSubmitted', { name: this.name })
-      createProduct({ category: this.category, title: this.title, description: this.description, colorVariants: this.colorVariants })
+      createProduct({ category: this.category, title: this.title, description: this.description, previewImage: this.previewImage, colorVariants: this.colorVariants })
     },
     plus() {
       this.colorVariants.push({ images: [""], sizes: [ {} ] })

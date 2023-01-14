@@ -11,7 +11,7 @@
     >
       <img
         class="img-fluid mb-3"
-        :src="require('@/assets/' + (product?.previewImage ? product.previewImage : 'images/logo.png'))"
+        :src="tryToRequireAsset(product?.previewImage)"
       >
       <p class="text-left text-dark">
         {{ product.title }}
@@ -21,6 +21,8 @@
 </template>
 <script>
 
+import { tryToRequireAsset } from '@/utilities.js'
+
 export default {
   props: {
     collection: {
@@ -29,6 +31,9 @@ export default {
         return []
       }
     }
+  },
+  methods: {
+    tryToRequireAsset,
   }
 }
 </script>

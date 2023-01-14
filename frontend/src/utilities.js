@@ -1,5 +1,5 @@
 export const getHexColor = (colorName) => {
-    console.log("colorName=", colorName);
+    // console.log("colorName=", colorName);
     switch (colorName.toLowerCase()) {
       default:
       case 'black': return '#000'
@@ -18,3 +18,11 @@ export const getHexColor = (colorName) => {
       case 'cyan': return '#0ff'
     }
   }
+
+export const tryToRequireAsset = (image) => {
+  try {
+    return require('@/assets/' + image)
+  } catch (e) {
+    return require('@/assets/images/logo.png')
+  }
+}

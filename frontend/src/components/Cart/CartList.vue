@@ -17,7 +17,7 @@
             class="text-decoration-none text-dark"
           >
             <img
-              :src="require('@/assets/' + item.previewImage)"
+              :src="tryToRequireAsset(item.previewImage)"
               class="cart-list-img"
             >
             {{ item.title }} / {{ item.color }} / 
@@ -52,6 +52,8 @@
   </div>
 </template>
 <script>
+
+import { tryToRequireAsset } from '@/utilities.js'
 
 export default {
   props: {
@@ -122,7 +124,8 @@ export default {
     },
     addQuantity (item) {
       this.$store.dispatch('addItem', item)
-    }
+    },
+    tryToRequireAsset,
   },
 }
 

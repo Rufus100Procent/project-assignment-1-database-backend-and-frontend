@@ -26,13 +26,15 @@
       v-for="image, i in selectables"
       :key="'image-' + i"
       data-testid="selectable"
-      :src="theImg(image)"
+      :src="tryToRequireAsset(image)"
       class="selectable-product-imgs"
       @click="$emit('update:activeIndex', i)"
     >
   </template>
 </template>
 <script>
+
+import { tryToRequireAsset } from '@/utilities.js'
 
 export default {
   props: {
@@ -67,13 +69,7 @@ export default {
         size.stock ? '' : 'bg-secondary text-white cursor-default'
       )
     },
-    theImg(image) {
-      try {
-        return require('@/assets/' + image)
-      } catch (e) {
-        return require('@/assets/images/logo.png')
-      }
-    }
+    tryToRequireAsset,
   },
 }
 </script>
