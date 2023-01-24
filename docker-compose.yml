@@ -1,6 +1,5 @@
 services:
   frontend:
-    container_name: frontend_container
     build: frontend/.
     ports:
       - "3010:3010"
@@ -10,7 +9,6 @@ services:
     restart: unless-stopped
     command: "npm run serve"
   database:
-    container_name: database_container
     image: postgres
     environment:
       POSTGRES_DB: saltmerch
@@ -24,19 +22,12 @@ services:
       - "5432:5432"
     restart: unless-stopped
   backend:
-    image: maven
-    container_name: backend_container
     build: backend/.
     ports:
       - "4010:4010"
     volumes:
-      - ./backend/:/backend-root
+      - ./backend/:/project-root
       - /backend/target
     restart: unless-stopped
  
- 
-
-
-
-
-
+      
