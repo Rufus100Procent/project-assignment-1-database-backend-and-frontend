@@ -45,8 +45,8 @@ public class ProductController {
     //Working
     //Tested
     @GetMapping("/products/{var}")
-    public Object getAllProductsCategory(@PathVariable("var") String var) {
-        return productService.selectAllOfCategory(var);
+    public Object sellectSpesificCatagory(@PathVariable("var") String var) {
+        return productService.specificitiesCategory(var);
     }
 
     //Working
@@ -71,14 +71,13 @@ public class ProductController {
 
     //almost done??
     @PostMapping("/products/{id}/variants")
-    public ResponseEntity<String> createNewVariantForSpecificProduct(@PathVariable int id, ColorVariant colorVariant) {
-            ColorVariant obj = productService.addvarient(id, colorVariant);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-
+    public ResponseEntity<ColorVariant> createNewVariantForSpecificProduct(@PathVariable int id,
+                                                                     ColorVariant colorVariant) {
+            return new ResponseEntity<>(productService.addvarient(id, colorVariant), HttpStatus.OK);
     }
 
     //working
-    @PutMapping("/products/{id}/variants/stock{size}{color}{quantity}")
+    @PutMapping("/products/{id}/variants/stock")
     //////optional
     public ResponseEntity<Integer> Restock(@PathVariable int id,
                         @RequestParam("size") String size,
@@ -86,9 +85,7 @@ public class ProductController {
                         @RequestParam("quantity") int quantity) {
 
        int product = productService.restockSize(id,size,color,quantity);
-
        return ResponseEntity.ok(product);
-
     }
 
     //Working

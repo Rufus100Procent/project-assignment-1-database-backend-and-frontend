@@ -15,22 +15,28 @@ public class CartService {
     @Autowired
     CartRepository dB;
 
-    public List<CartItem> selectAllItems(){
+    public List<CartItem> selectAllItems(int id){
 
-        return dB.selectAllItems();
+        if (id >= 1){
+
+            return dB.selectAllItems();
+        }
+        throw new RuntimeException("product with " + id + " found");
     }
 
-    public int insertOrIncrementItem(CartItem item) {
-
-        return dB.insertOrIncrementItem(item);
+    public int addIteam(int id, String action,  CartItem item) {
+            return dB.insertOrIncrementItem(item);
     }
 
-    public int deleteOrDecrementItem(CartItem item) {
-
-      return dB.deleteOrDecrementItem(item);
+    public int removeIteam(int id, String action,  CartItem item) {
+            return dB.deleteOrDecrementItem(item);
     }
-    public void deletAllIteams(boolean buyout) {
-        dB.deleteAllItems(buyout);
+
+    public void clearCart(boolean buyout) {
+        dB.deleteAllItems(false);
+    }
+    public void restock(int id) {
+        dB.deleteAllItems(false);
     }
 
 }

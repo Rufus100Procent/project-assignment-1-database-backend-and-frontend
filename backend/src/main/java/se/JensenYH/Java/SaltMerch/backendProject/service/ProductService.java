@@ -2,16 +2,12 @@ package se.JensenYH.Java.SaltMerch.backendProject.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import se.JensenYH.Java.SaltMerch.backendProject.Model.ColorVariant;
 import se.JensenYH.Java.SaltMerch.backendProject.Model.Product;
 import se.JensenYH.Java.SaltMerch.backendProject.repository.ProductRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -25,7 +21,7 @@ public class ProductService {
 
 
 
-    public Object selectAllOfCategory(String var) {
+    public Object specificitiesCategory(String var) {
 
         if (var != null && !var.isEmpty()) {
             switch (var) {

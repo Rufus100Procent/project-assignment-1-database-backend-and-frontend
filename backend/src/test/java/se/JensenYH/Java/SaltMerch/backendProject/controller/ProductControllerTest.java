@@ -40,27 +40,31 @@ class ProductControllerTest extends ContextTest{
 
     }
 
-/*
     //working
-    @Test
-    public void createSpecificProduct() throws Exception {
-        final String id = "1";
-        String payload = "{\n" +
-                "    \"titles\": \"jacket\",\n" +
-                "    \"description\": \"This is a jacket created from \",\n" +
-                "    \"previewImage\": \"images/salt-store-items/jacket/02.jpg\"\n" +
-                "  \n" +
-                "     \n" +
-                "}";
-       // RequestBuilder request = MockMvcRequestBuilders.post(getBaseUrl() + "/products/hats");
-        mockMvc.perform(MockMvcRequestBuilders.post(getBaseUrl() + "/products/" + id + "/variants" ).
-                        contentType(MediaType.APPLICATION_JSON_VALUE).
-                        content(payload)).
-                andExpect(status().isOk()).
-                andReturn();
 
-    }
-*/
+    //working
+
+    /*
+        //working
+        @Test
+        public void createSpecificProduct() throws Exception {
+            final String id = "1";
+            String payload = "{\n" +
+                    "    \"titles\": \"jacket\",\n" +
+                    "    \"description\": \"This is a jacket created from \",\n" +
+                    "    \"previewImage\": \"images/salt-store-items/jacket/02.jpg\"\n" +
+                    "  \n" +
+                    "     \n" +
+                    "}";
+           // RequestBuilder request = MockMvcRequestBuilders.post(getBaseUrl() + "/products/hats");
+            mockMvc.perform(MockMvcRequestBuilders.post(getBaseUrl() + "/products/" + id + "/variants" ).
+                            contentType(MediaType.APPLICATION_JSON_VALUE).
+                            content(payload)).
+                    andExpect(status().isOk()).
+                    andReturn();
+
+        }
+    */
     /*
     //?????
     @Test
@@ -78,17 +82,13 @@ class ProductControllerTest extends ContextTest{
                 APPLICATION_JSON_VALUE).content(payload)).andExpect(status().isCreated()).andReturn();
     }
 */
-
-    //working
     @Test
     public void getProducts() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(getBaseUrl() + "/products")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
-                       .andDo(print()) .andDo(print())
-                        .andExpect(status().isOk());
+                .andDo(print()) .andDo(print())
+                .andExpect(status().isOk());
     }
-
-    //working
     @Test
     public void deleteProduct()throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.delete(getBaseUrl() + "/products/1"))

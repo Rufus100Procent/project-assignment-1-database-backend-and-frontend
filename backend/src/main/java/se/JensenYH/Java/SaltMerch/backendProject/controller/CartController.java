@@ -17,23 +17,25 @@ public class CartController {
     CartService cartService;
 
     //working
-    @GetMapping("/selectall")
-    public List<CartItem> getCartContents() {
-        return cartService.selectAllItems();
+
+    @GetMapping("/carts/{id}")
+    public List<CartItem> getCartContents(@PathVariable int id) {
+         return  cartService.selectAllItems(id);
     }
 
 
     //Almost done
-    @PatchMapping("/carts/{id}{action}")
+    @PatchMapping("/carts/{id}")
     ///problem /Cannot convert value of type 'java.lang.String' to required type
-    public ResponseEntity<Integer> removeOrAdd(@PathVariable int id,
-                                               @RequestParam("action") CartItem action) {
+    public ResponseEntity<Integer> removeOrAdd(@PathVariable ("id") int id,
+                                               @RequestParam("action") String action,
+                                               @RequestBody CartItem item) {
 
-        if (action.equals("remove")) {
-            return ResponseEntity.ok(cartService.deleteOrDecrementItem(action));
+        if ("remove".equals(action)) {
+            return ResponseEntity.ok(cartService.removeIteam(id, action , item));
 
         } else if (action.equals("add")) {
-            return ResponseEntity.ok(cartService.insertOrIncrementItem(action));
+            return ResponseEntity.ok(cartService.addIteam(id, action, item));
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
@@ -41,15 +43,15 @@ public class CartController {
     //working
     @DeleteMapping("/carts/{id}{buyout}")
     //DELETE /api/v1/carts/{id}?buyout=true
-    public void reStockIteam(@PathVariable long id,
-                             @RequestParam("buyout") boolean buyout, CartItem item) {
+    public void reStockIteam(@PathVariable int id,
+                             @RequestParam("buyout") boolean buyout) {
 
         if (buyout) {
-            cartService.deletAllIteams(buyout);
+            cartService.clearCart(true);
             System.out.println("completed");
         } else {
-            cartService.deleteOrDecrementItem(item);
-            System.out.println("test");
+            cartService.restock(id);
+            System.out.println("retock");
         }
     }
 }
