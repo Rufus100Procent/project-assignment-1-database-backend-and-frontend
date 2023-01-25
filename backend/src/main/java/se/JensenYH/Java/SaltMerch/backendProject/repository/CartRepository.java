@@ -38,16 +38,17 @@ public  class CartRepository {
     }
 
 
-        // NOTE: NO NEED TO MODIFY THIS METHOD!
+    // NOTE: NO NEED TO MODIFY THIS METHOD!
     /** Inserts a new item to the cart, or increments to quantity of the item if it's
      *   already in the cart, and it lowers the stock of that item at the same time. */
     public int insertOrIncrementItem(CartItem item) {
+        System.out.println("item = " + item);
         // lower stock once cart item is added
         var lowerStockSql = """
-                UPDATE size
+                UPDATE sizes
                 SET stock = stock - 1
                 WHERE id = (
-                    SELECT s.id FROM size AS s
+                    SELECT s.id FROM sizes AS s
                     INNER JOIN variants AS v
                     ON v.id = s.variant_id
                     WHERE product_id = (:pid) AND color_name = (:color) AND size = (:size));
@@ -56,11 +57,12 @@ public  class CartRepository {
         paramMap.put("pid", item.getProductId());
         paramMap.put("size", item.getSize());
         paramMap.put("color", item.getColor());
-        
-        int quantity = itemQuantity(item);
-        System.out.println("quantity = " + quantity);
+
+        int curQty = itemQuantity(item);
+        System.out.println("curQty = " + curQty);
         String sql = "";
-        if (quantity < 0) {
+        if (curQty < 0)
+        {
             // insert item with quantity 1
             sql = """
                     INSERT INTO cart_items (product_id, title, color, size, quantity, preview_image)
@@ -69,9 +71,10 @@ public  class CartRepository {
             paramMap.put("title", item.getTitle());
             paramMap.put("img", item.getPreviewImage());
         }
-        else if (quantity == 0)
+        else if (curQty == 0)
             return -2; // edge case, item in cart has qty 0
-        else {
+        else
+        {
             // increment quantity
             sql = """
                         UPDATE cart_items
@@ -88,10 +91,10 @@ public  class CartRepository {
     public int deleteOrDecrementItem(CartItem item) {
         // restock once cart item is removed
         var restockSql = """
-                UPDATE size
+                UPDATE sizes
                 SET stock = stock + 1
                 WHERE id = (
-                    SELECT s.id FROM size AS s
+                    SELECT s.id FROM sizes AS s
                     INNER JOIN variants AS v
                     ON v.id = s.variant_id
                     WHERE product_id = (:pid) AND color_name = (:color) AND size = (:size));
@@ -154,7 +157,7 @@ public  class CartRepository {
             System.out.println("res = " + res);
         }
     }
-    
+
     // NOTE: NO NEED TO MODIFY THIS METHOD!
     private int itemQuantity(CartItem item) {
         RowMapper<Integer> rm = (rs, rowNum) -> rs.getInt("quantity");
@@ -163,8 +166,11 @@ public  class CartRepository {
                 FROM cart_items
                 WHERE product_id = (:pid) AND color = (:color) AND size = (:size);
                 """;
-        List<Integer> quantityList = jdbcTemplate.query(sql, rm, item.getProductId(),
-                                                          item.getColor(), item.getSize());
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put("pid", item.getProductId());
+        paramMap.put("color", item.getColor());
+        paramMap.put("size", item.getSize());
+        List<Integer> quantityList = new NamedParameterJdbcTemplate(jdbcTemplate).query(sql, paramMap, rm);
         return quantityList.size() > 0 ? quantityList.get(0) : -10;
     }
 }

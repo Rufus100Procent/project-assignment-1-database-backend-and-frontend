@@ -1,8 +1,12 @@
 package se.JensenYH.Java.SaltMerch.backendProject.Model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class SizeContainer {
-    private String size;
-    private int stock;
+    @JsonProperty
+    public String size;
+    @JsonProperty
+    public int stock;
 
     public SizeContainer() {
     }
@@ -10,6 +14,14 @@ public class SizeContainer {
     public SizeContainer(String size, int stock) {
         this.size = size;
         this.stock = stock;
+    }
+
+    @Override
+    public String toString() {
+        return "SizeContainer{" +
+                "size='" + size + '\'' +
+                ", stock=" + stock +
+                '}';
     }
     //prefere to use getters and setters
     //<editor-fold defaultstate="collapsed" desc="Getters and Setters">

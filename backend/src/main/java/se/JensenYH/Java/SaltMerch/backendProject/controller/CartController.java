@@ -23,14 +23,15 @@ public class CartController {
          return  cartService.selectAllItems(id);
     }
 
-
     //Almost done
     @PatchMapping("/carts/{id}")
     ///problem /Cannot convert value of type 'java.lang.String' to required type
     public ResponseEntity<Integer> removeOrAdd(@PathVariable ("id") int id,
                                                @RequestParam("action") String action,
                                                @RequestBody CartItem item) {
-
+        //cartService.removeIteam(id, action , item);
+        //if (true) return null;
+        /// The column index is out of range: 1, number of columns: 0.] with root cause
         if ("remove".equals(action)) {
             return ResponseEntity.ok(cartService.removeIteam(id, action , item));
 

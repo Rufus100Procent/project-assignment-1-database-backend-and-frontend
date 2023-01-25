@@ -69,11 +69,15 @@ public class ProductController {
         return ResponseEntity.ok(product1);
     }
 
-    //almost done??
+    //working
     @PostMapping("/products/{id}/variants")
     public ResponseEntity<ColorVariant> createNewVariantForSpecificProduct(@PathVariable int id,
-                                                                     ColorVariant colorVariant) {
-            return new ResponseEntity<>(productService.addvarient(id, colorVariant), HttpStatus.OK);
+                                                                     @RequestBody ColorVariant colorVariant) {
+
+        System.out.println("colorVariant = " + colorVariant);
+        System.out.println("colorVariant.sizes = " + colorVariant.sizes);
+
+        return new ResponseEntity<>(productService.addvarient(id, colorVariant), HttpStatus.OK);
     }
 
     //working

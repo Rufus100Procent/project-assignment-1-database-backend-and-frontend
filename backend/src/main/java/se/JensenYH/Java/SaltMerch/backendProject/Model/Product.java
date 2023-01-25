@@ -1,33 +1,41 @@
 package se.JensenYH.Java.SaltMerch.backendProject.Model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Product implements Serializable {
-        private int id;
-        private String catagory;
-        private String title;
-        private String description;
-        private String previewImage;
-        private List<ColorVariant> colorVariants;
+    @JsonProperty
+    public int id;
+    @JsonProperty
+    public String category;
+    @JsonProperty
+    public String title;
+    @JsonProperty
+    public String description;
+    @JsonProperty
+    public String previewImage;
+    @JsonProperty
+    public List<ColorVariant> colorVariants;
 
     public Product() {
         colorVariants = new ArrayList<>();
     }
 
-    public Product(int id, String catagory, String title, String description, String previewImage) {
+    public Product(int id, String category, String title, String description, String previewImage) {
         this.id = id;
-        this.catagory = catagory;
+        this.category = category;
         this.title = title;
         this.description = description;
         this.previewImage = previewImage;
         colorVariants = new ArrayList<>();
     }
 
-    public Product(int id, String catagory, String title, String description, List<ColorVariant> colorVariants) {
+    public Product(int id, String category, String title, String description, List<ColorVariant> colorVariants) {
         this.id = id;
-        this.catagory = catagory;
+        this.category = category;
         this.title = title;
         this.description = description;
         this.colorVariants = colorVariants;
@@ -44,12 +52,12 @@ public class Product implements Serializable {
         this.id = id;
     }
 
-    public String getCatagory() {
-        return catagory;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCatagory(String catagory) {
-        this.catagory = catagory;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getTitle() {

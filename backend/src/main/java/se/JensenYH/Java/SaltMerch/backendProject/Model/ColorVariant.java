@@ -1,15 +1,21 @@
 package se.JensenYH.Java.SaltMerch.backendProject.Model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 public class ColorVariant {
-    private String colorName;
-    private List<String> images;
-    private  List<SizeContainer> sizes;
+    @JsonProperty
+    public String colorName;
+    @JsonProperty
+    public List<String> images;
+    @JsonProperty
+    public  List<SizeContainer> sizes;
 
     public ColorVariant() {
         images = new ArrayList<>();
+        sizes = new ArrayList<>();
 
     }
 
@@ -21,6 +27,15 @@ public class ColorVariant {
 
     public void setImagesFromCSV(String csv) throws Exception {
         images = new ArrayList<>(Arrays.asList(csv.split(",")));
+    }
+
+    @Override
+    public String toString() {
+        return "ColorVariant{" +
+                "colorName='" + colorName + '\'' +
+                ", images=" + images +
+                ", sizes=" + sizes +
+                '}';
     }
 
     //prefere to use getters and setters
