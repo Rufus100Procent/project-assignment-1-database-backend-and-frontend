@@ -25,14 +25,9 @@ public class ProductController {
 
     @Autowired
     ProductService productService;
-    @Autowired
-    CartService cartService;
 
     public ProductController(ProductService productService) {
         this.productService = productService;
-    }
-
-    public ProductController() {
     }
 
     //Working
@@ -55,7 +50,7 @@ public class ProductController {
     public ResponseEntity<Product> createNewProduct(@RequestBody Product prod,
                                                     @PathVariable("catagory") String catagory) {
 
-        Product createProdect = productService.insertProductAndProps(prod, catagory);
+        Product createProdect = productService.createProducts(prod, catagory);
         return ResponseEntity.ok(createProdect);
     }
 
@@ -63,26 +58,24 @@ public class ProductController {
     //Working
     //Tested
     @PutMapping("/products/{id}")
-    public ResponseEntity<Integer> specificSizeOfVariant(@PathVariable int id,
+    public ResponseEntity<Integer> updateById(@PathVariable int id,
                                                          @RequestBody Product product) {
         int product1 = productService.updateProductMeta(id, product);
         return ResponseEntity.ok(product1);
     }
 
     //working
+    //Tested
     @PostMapping("/products/{id}/variants")
     public ResponseEntity<ColorVariant> createNewVariantForSpecificProduct(@PathVariable int id,
                                                                      @RequestBody ColorVariant colorVariant) {
-
-        System.out.println("colorVariant = " + colorVariant);
-        System.out.println("colorVariant.sizes = " + colorVariant.sizes);
 
         return new ResponseEntity<>(productService.addvarient(id, colorVariant), HttpStatus.OK);
     }
 
     //working
+    //Tested
     @PutMapping("/products/{id}/variants/stock")
-    //////optional
     public ResponseEntity<Integer> Restock(@PathVariable int id,
                         @RequestParam("size") String size,
                         @RequestParam("color") String color,
@@ -95,7 +88,7 @@ public class ProductController {
     //Working
     //Tested
     @DeleteMapping("/products/{id}")
-    public ResponseEntity<Object> deleteProduct(@PathVariable("id") int id) {
+    public ResponseEntity<Object> deleteProductById(@PathVariable("id") int id) {
 
         if (productService.deleteProduct(id) >= 0) {
             return ResponseEntity.ok().build();
@@ -105,6 +98,7 @@ public class ProductController {
 
 
     //working
+    //Tested
     @DeleteMapping("products/{id}/variants{color}")
     public ResponseEntity<String> deleteVariantOfProduct(@PathVariable int id,
                                                          @RequestParam("color") String color) {

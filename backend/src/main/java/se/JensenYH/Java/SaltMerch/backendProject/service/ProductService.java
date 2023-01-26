@@ -24,29 +24,22 @@ public class ProductService {
     public Object specificitiesCategory(String var) {
 
         if (var != null && !var.isEmpty()) {
-            switch (var) {
-                case "hats":
-                case "jackets":
-                case "tshirt":
-                case "bags":
-                    return productRepository.selectAll(var);
-                default:
-                    return productRepository.getEntireProduct(Integer.parseInt(var));
-            }
+            return switch (var) {
+                case "hats", "jackets", "tshirt", "bags" -> productRepository.selectAll(var);
+                default -> productRepository.getEntireProduct(Integer.parseInt(var));
+            };
         }
         throw new RuntimeException("product with " + var + " doesnt exits");
 
 
     }
-    public Product insertProductAndProps(Product prod, String category) {
+    public Product createProducts(Product prod, String category) {
 
         if (category != null && !category.isEmpty()) {
-            switch (category){
-                case "hats":
-                case "jackets":
-                case "tshirt":
-                case "bags":
-                    return  productRepository.insertProductAndProps(prod, category);
+            switch (category) {
+                case "hats", "jackets", "tshirt", "bags" -> {
+                    return productRepository.insertProductAndProps(prod, category);
+                }
             }
         }
             throw new RuntimeException("cant create " + category + " check your json");

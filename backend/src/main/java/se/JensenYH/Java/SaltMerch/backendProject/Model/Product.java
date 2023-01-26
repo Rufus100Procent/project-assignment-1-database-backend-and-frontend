@@ -1,24 +1,15 @@
 package se.JensenYH.Java.SaltMerch.backendProject.Model;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Product implements Serializable {
-    @JsonProperty
-    public int id;
-    @JsonProperty
-    public String category;
-    @JsonProperty
-    public String title;
-    @JsonProperty
-    public String description;
-    @JsonProperty
-    public String previewImage;
-    @JsonProperty
-    public List<ColorVariant> colorVariants;
+    private int id;
+    private String category;
+    private String title;
+    private String description;
+    private String previewImage;
+    private List<ColorVariant> colorVariants;
 
     public Product() {
         colorVariants = new ArrayList<>();
@@ -41,7 +32,6 @@ public class Product implements Serializable {
         this.colorVariants = colorVariants;
     }
 
-    //prefere to use getters and setters
     //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
 
     public int getId() {

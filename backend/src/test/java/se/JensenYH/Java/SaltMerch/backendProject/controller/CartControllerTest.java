@@ -1,29 +1,39 @@
 package se.JensenYH.Java.SaltMerch.backendProject.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.http.ResponseEntity;
+import se.JensenYH.Java.SaltMerch.backendProject.Model.CartItem;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-@SpringBootTest
-@AutoConfigureMockMvc
-class CartControllerTest extends ContextTest{
+class CartControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;
+    CartController cartController;
 
+
+    //working.
     @Test
-    void getCartContents() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(getBaseUrl() + "/selectall")
-                        .accept(MediaType.APPLICATION_JSON_VALUE))
-                .andDo(print()) .andDo(print())
-                .andExpect(status().isOk());
+    void testRemoveOrAdd() {
+        cartController = new CartController();
+        ResponseEntity<Integer> actualRemoveOrAddResult = cartController.removeOrAdd(1, "Action",
+                new CartItem(123, "Dr", "Color", "Size", "Preview Image"));
+        assertNull(actualRemoveOrAddResult.getBody());
+        assertEquals(400, actualRemoveOrAddResult.getStatusCodeValue());
+        assertTrue(actualRemoveOrAddResult.getHeaders().isEmpty());
+    }
+    //working
+    @Test
+    void testRemoveOrAdd4() {
+        ResponseEntity<Integer> actualRemoveOrAddResult = (new CartController()).removeOrAdd(1, "Action",
+                mock(CartItem.class));
+        assertNull(actualRemoveOrAddResult.getBody());
+        assertEquals(400, actualRemoveOrAddResult.getStatusCodeValue());
+        assertTrue(actualRemoveOrAddResult.getHeaders().isEmpty());
     }
 }
+

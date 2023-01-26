@@ -15,7 +15,7 @@ public class CartService {
     @Autowired
     CartRepository dB;
 
-    public List<CartItem> selectAllItems(int id){
+    public List<CartItem> selecttById(int id){
 
         if (id >= 1){
 
@@ -24,11 +24,11 @@ public class CartService {
         throw new RuntimeException("product with " + id + " found");
     }
 
-    public int addIteam(int id, String action,  CartItem item) {
+    public int addIteam(CartItem item) {
             return dB.insertOrIncrementItem(item);
     }
 
-    public int removeIteam(int id, String action,  CartItem item) {
+    public int removeIteam(CartItem item) {
             return dB.deleteOrDecrementItem(item);
     }
 

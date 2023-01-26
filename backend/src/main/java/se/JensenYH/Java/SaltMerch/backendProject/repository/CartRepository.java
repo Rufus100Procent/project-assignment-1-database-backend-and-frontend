@@ -60,7 +60,7 @@ public  class CartRepository {
 
         int curQty = itemQuantity(item);
         System.out.println("curQty = " + curQty);
-        String sql = "";
+        String sql;
         if (curQty < 0)
         {
             // insert item with quantity 1
@@ -127,8 +127,8 @@ public  class CartRepository {
         return new NamedParameterJdbcTemplate(jdbcTemplate).update(sql, paramMap);
     }
     
-    /** Deletes all items from the cart; IF the restock param is true, it restocks
-     *   all items that were previously in the cart. Otherwise it doesn't restock
+    /** Deletes all items from the cart; IF the restocking param is true, it restocks
+     *   all items that were previously in the cart. Otherwise, it doesn't restock
      *   anything, meaning the items were sold. */
     @Transactional
     public void deleteAllItems(boolean restock) {
